@@ -2,11 +2,11 @@ module.exports = app => {
     const users = require("../controllers/users.controller.js");
     let router= require('express').Router();
 
-    /// create new pin ///
+    /// create new user ///
     router.post("/", users.create);
 
-    /// retrieve a single pins with id ///
-    router.get("/:id", users.findOne);
+    /// retrieve a single user with email ///
+    router.post("/log", users.findOne);
 
     /// delete user with id ///
     router.delete("/:id", users.delete);

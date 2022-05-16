@@ -20,15 +20,15 @@ User.create = (newUser, result) => {
     });
 };
 
-User.findById = (id, result) => {
-    sql.query(`SELECT * FROM users WHERE id = ${id}`, (err, res) => {
+User.findOne = (email, result) => {
+    sql.query(`SELECT * FROM users WHERE email = "${email}"`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
             return;
         }
         if (res.length) {
-            console.log("found pin: ", res[0]);
+            console.log("found user: ", res[0]);
             result(null, res[0]);
             return;
         }

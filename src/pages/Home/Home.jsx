@@ -15,9 +15,9 @@ const Home = () => {
     }, [])
 
     let pin;
-    Pins.length === 0 ? pin = <div className="col-md-6 mx-auto text-center"><p>pas de pins à afficher</p></div> : pin = Pins.map((p) => {
+    Pins.length === 0 ? pin = <div className="col-md-6 mx-auto text-center"><p>pas de pins à afficher</p></div> : pin = Pins.map(p => {
         return (
-        <Card className="rounded shadow p-3 bg-light rounded" style={{ width: '15rem', margin: 25 }} key={p._id}>
+        <Card className="rounded shadow p-3 bg-light rounded" style={{ width: '15rem', margin: 25 }} key={p.id}>
             <Card.Img variant="top" src={p.imageName}  style={{borderBottomRightRadius: "0.25rem", borderBottomLeftRadius: "0.25rem"}}/>
             <Card.Body style={{display: "flex", flexDirection: "column"}}>
             <Card.Title  className='text-truncate' style={{marginLeft: 5}}>{p.title}</Card.Title>
