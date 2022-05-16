@@ -1,10 +1,10 @@
-const req = require('express/lib/request');
 const sql = require ('./db');
 
 const Pin = function (pin) {
     this.title = pin.title;
     this.description = pin.description;
     this.published = pin.published;
+    this.imageUrl = pin.imageUrl;
 };
 
 Pin.create = (newPin, result) => {
@@ -14,7 +14,6 @@ Pin.create = (newPin, result) => {
             result(err, null);
             return;
         }
-        console.log("id poacket", res.insertId)
         console.log("created pin: ", {id: res.insertId, ...newPin});
         result(null, {id: res.insertId, ...newPin});
     });
@@ -67,14 +66,14 @@ Pin.getAllPublished = result => {
 Pin.updateById = (id, pin, result) => {
     sql.query(
       "UPDATE pins SET title = ?, description = ?, published = ? WHERE id = ?",
-      [pin.title, pin.description, pin.published, id],
+      [pin.title, pin.description, pin.published, pin.imageUrl, id],
       (err, res) => {
         if (err) {
           console.log("error: ", err);
           result(null, err);
           return;
         }
-        if (res.affectedRows == 0) {
+        if (res.affectedRows === 0) {
           // not found Pin with the id
           result({ kind: "not_found" }, null);
           return;

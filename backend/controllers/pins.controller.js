@@ -1,4 +1,15 @@
 const Pin = require("../models/pin.model.js");
+const bcrypt = require('bcrypt');
+const uid2 = require('uid2');
+const cloudinary = require('cloudinary').v2;
+let fs = require('fs');
+const uniqid = require('uniqid');
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+})
 
 exports.create = (req, res) => {
     // Validate request
@@ -11,7 +22,8 @@ exports.create = (req, res) => {
     const pin = new Pin({
       title: req.body.title,
       description: req.body.description,
-      published: req.body.published || false
+      published: req.body.published || false,
+      imageName: req.body.imageName
     });
     // Save Pin in the database
     Pin.create(pin, (err, data) => {
@@ -23,6 +35,25 @@ exports.create = (req, res) => {
       else res.send(data);
     });
   };
+
+exports.upload = async (req, res) => {
+  try {    
+    let picture = './tmp' + uniqid() + '.jpg'
+    let resultCopy = await req.files.file.mv(picture)
+    if(!resultCopy) {
+      console.log('envoi vers cloudinary');
+      let cloudres = await cloudinary.uploader.upload(picture)
+      console.log(cloudres)
+      res.json({cloudres})
+  
+    } else {
+      res.json({result: false, message: resultCopy})
+    }
+    fs.unlinkSync(picture)
+  } catch (err) {
+    console.log(err)
+  }
+}
 
   // Retrieve all Pin from the database (with condition).
 exports.findAll = (req, res) => {
