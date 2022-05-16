@@ -4,6 +4,7 @@ const User = require("../models/user.model.js");
 const bcrypt = require('bcrypt');
 const uid2 = require('uid2');
 
+/// date format ///
 const date = new Date();
 let d = date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate()
 
@@ -21,7 +22,8 @@ exports.create = (req, res) => {
       lastname: req.body.lastname,
       email: req.body.email,
       registeredAt: d,
-      password: hash
+      password: hash,
+      token: uid2(32)
     });
     // Save Pin in the database
     User.create(pin, (err, data) => {

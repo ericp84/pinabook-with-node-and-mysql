@@ -21,8 +21,9 @@ const Signup = () => {
             body: `firstname=${firstname}&lastname=${lastname}&email=${email}&password=${password}`
         })
         const userUp = await user.json();
+        console.log(userUp)
 
-        userUp.result ? setUserExist(true) : setErrors(userUp.error)
+        userUp ? setUserExist(true) : setErrors(userUp.error)
     }
 
     useEffect(()=> {
