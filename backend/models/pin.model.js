@@ -14,7 +14,7 @@ Pin.create = (newPin, result) => {
             result(err, null);
             return;
         }
-        console.log("created pin: ", {id: res.insertId, ...newPin});
+        // console.log("created pin: ", {id: res.insertId, ...newPin});
         result(null, {id: res.insertId, ...newPin});
     });
 };
@@ -46,7 +46,7 @@ Pin.getAll = (title, result) => {
         result(null, err);
         return;
       }
-      console.log("pins: ", res);
+      // console.log("pins: ", res);
       result(null, res);
     });
 };

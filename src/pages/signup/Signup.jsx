@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Badge} from 'react-bootstrap';
+// import {Badge} from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom'
+import {connect} from 'react-redux';
 
 
-const Signup = () => {
+const Signup = (props) => {
     const[firstname, setFirstname] = useState('');
     const[lastname, setLastname] = useState('');
     const[password, setPassword] = useState('');
@@ -35,6 +36,7 @@ const Signup = () => {
         <>
             <div className="row">
                 <div className="col-md-6 mx-auto m-5">
+                    {props.token}
                     <h1 className='text-center mb-5'>Créez votre compte 🗝️</h1>
                     <form>
                         <div className="row">
@@ -85,6 +87,7 @@ const Signup = () => {
                                 onChange={(e)=>setPassword(e.target.value)}
                                 />
                         </div>
+                        {errors}
                         <div className="d-grid gap-2">
                             <button  style={{borderRadius: 50}} type="submit" className="btn btn-success mt-5" onClick={(e)=>handleRegister(e.preventDefault())}>Créer le compte</button>
                         </div>
@@ -94,5 +97,13 @@ const Signup = () => {
         </>
     );
 };
+function mapStateToProps(state) {
+    return{
+        token: state.token
+    }
+}
 
-export default Signup;
+export default connect(
+    mapStateToProps,
+    null
+)(Signup);

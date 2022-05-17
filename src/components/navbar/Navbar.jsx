@@ -2,9 +2,8 @@ import React, {useState} from 'react';
 import {Container, Navbar, Nav} from 'react-bootstrap';
 // import {connect} from 'react-redux';
 
-const NavBar = (props) => {
-
-    const [token] = useState(props.token)
+const NavBar = () => {
+    const [token] = useState(sessionStorage.getItem("token"))
 
     const isAuth =  
     <>

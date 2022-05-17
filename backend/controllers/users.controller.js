@@ -25,6 +25,7 @@ exports.create = (req, res) => {
       password: hash,
       token: uid2(32)
     });
+
     // Save Pin in the database
     User.create(pin, (err, data) => {
       if (err)
@@ -40,7 +41,7 @@ exports.create = (req, res) => {
     User.findOne(req.body.email, (err, data) => {
         const decrypt = bcrypt.compareSync(req.body.password, data.password)
         if (decrypt) {
-            res.json(data)
+          res.json(data)
         }
       if (err) {
         if (err.kind === "not_found") {

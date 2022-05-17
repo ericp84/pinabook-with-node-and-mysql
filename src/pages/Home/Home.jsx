@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {Card} from 'react-bootstrap';
+import {connect} from 'react-redux';
 
-const Home = () => {
+const Home = (props) => {
     const [Pins, setPins] = useState([]);
     const [id, setId] = useState()
+
+    let moncul = sessionStorage.getItem("username")
 
     useEffect(()=> {
         const pini = async() => {
@@ -33,7 +36,7 @@ const Home = () => {
 
     return (
         <>
-            <h1 className='text-center m-5'>Découvrez les meilleurs pins du monde 'props' ! 🌎</h1>
+            <h1 className='text-center m-5'>Découvrez les meilleurs pins du monde {moncul} ! 🌎</h1>
                 <div className="row">
                     <div className="col-md-8 d-flex justify-content-center w-100 mt-5 flex-wrap">
                         {pin}
@@ -42,4 +45,12 @@ const Home = () => {
         </>
     );
 };
-export default Home;
+function mapStateToProps(state) {
+    return {
+        token: state.token
+    }
+}
+export default connect(
+    mapStateToProps,
+    null
+) (Home);

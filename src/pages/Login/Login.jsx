@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Badge} from 'react-bootstrap';
+// import {Badge} from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState([]);
+    // const [errors, setErrors] = useState([]);
     const [userExist, setUserExist] = useState(false);
+
 
     const nav = useNavigate();
 
@@ -18,24 +20,19 @@ const Login = (props) => {
             })
 
             const userIn = await user.json();
+            console.log(userIn)
             if(userIn) {
                 setUserExist(true)
-            } else {            
-                console.log('ca marche pas ma couillasse')
-                // props.addPseudo(userIn.user.firstName)
-                // props.addId(userIn.user._id)
-                // props.addEmail(userIn.user.email)
-                // props.addToken(userIn.token)
-                // props.addDate(userIn.user.createdAt)
+                sessionStorage.setItem("token", userIn.token) 
+                sessionStorage.setItem("username", userIn.firstname)
+                sessionStorage.setItem("date", userIn.registeredAt)
             }
         }
-        console.log(userExist)
         useEffect(()=> {
         if(userExist) {
             return nav("/")
         }
         }, [nav, userExist])
-   
     return (
         <>
         <h1 className='text-center mt-5'>Connectez vous 😀</h1>
@@ -84,5 +81,12 @@ const Login = (props) => {
         </>
     );
 };
-
-export default Login;
+function mapDispatchToProps(dispatch) {
+    return {
+    addToken: function(token) {dispatch({type: "addToken", token: token})}
+}
+}
+export default connect(
+    null, 
+    mapDispatchToProps
+)(Login);

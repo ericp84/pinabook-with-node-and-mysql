@@ -10,16 +10,25 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/signup/Signup';
 
+import token from './reducers/Token';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+
+const store = createStore(combineReducers({token}))
+
+
 const Routing = () => {
   return(
-    <BrowserRouter>
-      <Navbar/>
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/signup" element={<Signup/>}/>
-      </Routes>
-    </BrowserRouter>
+    <Provider store = {store}>
+      <BrowserRouter>
+        <Navbar/>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/signup" element={<Signup/>}/>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   )
 }
 
