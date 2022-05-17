@@ -23,9 +23,10 @@ const Login = (props) => {
             console.log(userIn)
             if(userIn) {
                 setUserExist(true)
-                sessionStorage.setItem("token", userIn.token) 
-                sessionStorage.setItem("username", userIn.firstname)
-                sessionStorage.setItem("date", userIn.registeredAt)
+                props.addToken(userIn.token)
+                // sessionStorage.setItem("token", userIn.token) 
+                // sessionStorage.setItem("username", userIn.firstname)
+                // sessionStorage.setItem("date", userIn.registeredAt)
             }
         }
         useEffect(()=> {

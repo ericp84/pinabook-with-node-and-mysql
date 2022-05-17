@@ -10,24 +10,24 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/signup/Signup';
 
-import token from './reducers/Token';
-import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-
-const store = createStore(combineReducers({token}))
+import {store, persistor} from './configureStore';
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 const Routing = () => {
   return(
     <Provider store = {store}>
-      <BrowserRouter>
-        <Navbar/>
-        <Routes>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/signup" element={<Signup/>}/>
-        </Routes>
-      </BrowserRouter>
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>
+          <Navbar/>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/signup" element={<Signup/>}/>
+          </Routes>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   )
 }

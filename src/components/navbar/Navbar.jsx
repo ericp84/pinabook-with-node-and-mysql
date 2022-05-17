@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import {Container, Navbar, Nav} from 'react-bootstrap';
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 
-const NavBar = () => {
-    const [token] = useState(sessionStorage.getItem("token"))
+const NavBar = (props) => {
+    const [token] = useState(props.token)
+    console.log("nav token",token)
 
     const isAuth =  
     <>
         <Nav.Link href="/profil">Profil</Nav.Link>
         <Nav.Link href="/pins_create">Créer un Pin</Nav.Link>
-        <Nav.Link href="/" onClick={()=>sessionStorage.clear()}>Déconnexion</Nav.Link>
+        <Nav.Link href="/" onClick={()=>localStorage.clear()}>Déconnexion</Nav.Link>
     </> 
     const isGuest = 
     <>
@@ -34,5 +35,11 @@ const NavBar = () => {
         </>
     );
 };
+function mapStateToProps(state) {
+    return {token: state.token}
+}
 
-export default NavBar;
+export default connect(
+    mapStateToProps,
+    null
+)(NavBar);
